@@ -31,7 +31,7 @@ The instruction set is extremely simple and consists of four main instructions:
 Instruction | opcode | Parameters | Usage
 --- | --- | --- | ---
 DSP | 00 | OPCODE: 2bits; RESERVED: 2bits; SRC: 2bits; RESERVED: 4bits | displays the contents of the register specified by `SRC`
-JMP | 01 | OPCODE: 2bits; CONSTANT: 8bits | sets the program counter to `CONSTANT` (**Note**: the program counter is only 4 bits wide and so the first 4bits of `CONSTANT` are ignored)
+JZ | 01 | OPCODE: 2bits; SRC: 2bits; CONSTANT: 6bits | sets the program counter to `CONSTANT` if the register specified by `SRC` is 0 (**Note**: the program counter is only 4 bits wide and so the first 2bits of `CONSTANT` are ignored) 
 SET | 10 | OPCODE: 2bits; DST: 2bits; CONSTANT: 6bits | sets the first 6 bits of the register specified by `DST` to `CONSTANT`
 ALU | 11 | OPCODE: 2bits; DST: 2bits; SRC1: 2bits; SRC2: 2bits; FUNC: 2bits | Performs the arithmetic operation specified by `FUNC` on `SRC1` and `SRC2`, storing the output in `DST`
 
@@ -74,7 +74,7 @@ while (true)
 | 11 01 10 11 00 | &nbsp;&nbsp;&nbsp;&nbsp;ADD r1 r2 r3
 | 11 10 11 00 00 | &nbsp;&nbsp;&nbsp;&nbsp;ADD r2 r3 r0
 | 00 00 01 0000  | &nbsp;&nbsp;&nbsp;&nbsp;DSP r1
-| 01 00000011    | &nbsp;&nbsp;&nbsp;&nbsp;JMP loop_start
+| 01 00 000011    | &nbsp;&nbsp;&nbsp;&nbsp;JZ r0 loop_start
 
 ## TODO:
 * Implement conditional jumps `jl` and `jle`. This will require increasing the opcode width and instruction width by 1
